@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 6 Student Workspace</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tealBrand: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59' },
+                        orangeBrand: { 500: '#f97316', 600: '#ea580c' }
+                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-tealBrand-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-orangeBrand-500 text-white p-2 rounded-lg shadow">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">Class 6 Student Hub</h1>
+                    <p class="text-xs text-tealBrand-100">NCTB Textbooks, AI Assistant & Planner</p>
+                </div>
+            </div>
+            <nav class="flex flex-wrap justify-center gap-1 bg-tealBrand-800 p-1 rounded-xl text-xs sm:text-sm font-medium">
+                <button onclick="switchTab('textbooks')" id="tab-textbooks" class="nav-btn px-3 py-1.5 rounded-lg bg-orangeBrand-500 text-white font-semibold">
+                    <i class="fa-solid fa-book mr-1.5"></i>Textbooks
+                </button>
+                <button onclick="switchTab('ai')" id="tab-ai" class="nav-btn px-3 py-1.5 rounded-lg text-tealBrand-100 hover:text-white">
+                    <i class="fa-solid fa-robot mr-1.5"></i>AI Study Buddy
+                </button>
+                <button onclick="switchTab('planner')" id="tab-planner" class="nav-btn px-3 py-1.5 rounded-lg text-tealBrand-100 hover:text-white">
+                    <i class="fa-solid fa-list-check mr-1.5"></i>Study Planner
+                </button>
+                <button onclick="switchTab('tutorial')" id="tab-tutorial" class="nav-btn px-3 py-1.5 rounded-lg text-tealBrand-100 hover:text-white">
+                    <i class="fa-solid fa-key mr-1.5"></i>API Guide
+                </button>
+                <button onclick="switchTab('contact')" id="tab-contact" class="nav-btn px-3 py-1.5 rounded-lg text-tealBrand-100 hover:text-white">
+                    <i class="fa-solid fa-address-card mr-1.5"></i>Contact
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+
+        <!-- TAB 1: TEXTBOOKS -->
+        <section id="sec-textbooks" class="tab-content block space-y-4">
+            <div class="bg-gradient-to-r from-tealBrand-600 to-tealBrand-800 rounded-2xl p-6 text-white shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <span class="bg-orangeBrand-500 text-xs font-bold uppercase px-2.5 py-1 rounded-full">Official NCTB</span>
+                    <h2 class="text-2xl font-bold mt-2">Class 6 NCTB Digital Textbooks</h2>
+                    <p class="text-tealBrand-100 text-sm mt-1">Access official Class 6 textbooks directly on the Board portal.</p>
+                </div>
+                <a href="https://nctb.gov.bd/pages/static-pages/695b987ac4774958d7b7040b" target="_blank" class="bg-white text-tealBrand-700 font-bold px-4 py-2.5 rounded-xl text-sm whitespace-nowrap">
+                    <i class="fa-solid fa-globe"></i> NCTB Portal
+                </a>
+            </div>
+
+            <div id="categoryFilters" class="flex flex-wrap gap-1.5 py-1"></div>
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400"></i>
+                <input type="text" id="bookSearch" onkeyup="filterBooks()" placeholder="Search textbooks..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white shadow-sm">
+            </div>
+            <div id="booksGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4"></div>
+        </section>
+
+        <!-- TAB 2: AI TUTOR -->
+        <section id="sec-ai" class="tab-content hidden space-y-4">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[620px]">
+                <div class="p-4 border-b border-slate-100 bg-slate-50 rounded-t-2xl flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orangeBrand-500 text-white flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-base">Gemini Class 6 Tutor</h3>
+                            <p class="text-xs text-slate-500">Ask homework questions & explain topics!</p>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('tutorial')" class="text-xs bg-tealBrand-50 text-tealBrand-700 font-semibold px-3 py-1.5 rounded-lg border border-tealBrand-200">
+                        <i class="fa-solid fa-key mr-1"></i>Set Key
+                    </button>
+                </div>
+
+                <div class="bg-tealBrand-50 px-4 py-2 border-b border-tealBrand-100 flex items-center justify-between text-xs">
+                    <span class="text-tealBrand-800 font-medium">
+                        <i class="fa-solid fa-shield-halved text-tealBrand-600"></i> Key Status: <span id="apiKeyStatus" class="font-mono text-slate-600">Not Saved</span>
+                    </span>
+                    <button onclick="switchTab('tutorial')" class="text-tealBrand-700 underline font-semibold">Configure</button>
+                </div>
+
+                <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50/50">
+                    <div class="flex gap-3 max-w-[85%]">
+                        <div class="w-8 h-8 rounded-lg bg-tealBrand-600 text-white flex items-center justify-center text-xs font-bold">AI</div>
+                        <div class="bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200 text-sm shadow-sm space-y-2">
+                            <p class="font-semibold text-tealBrand-700">Hello Class 6 Student! 👋</p>
+                            <p>I am your Gemini Study Assistant. Paste your Google AI key to get started!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 border-t border-slate-200 bg-white rounded-b-2xl">
+                    <form onsubmit="handleChatSubmit(event)" class="flex gap-2">
+                        <input type="text" id="chatInput" placeholder="Ask your study question here..." class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
+                        <button type="submit" class="bg-orangeBrand-500 hover:bg-orangeBrand-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition">Send</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- TAB 3: PLANNER -->
+        <section id="sec-planner" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">Class 6 Study & Homework Tracker</h2>
+                <form onsubmit="addTask(event)" class="flex flex-col sm:flex-row gap-2 mb-6">
+                    <input type="text" id="taskTitle" placeholder="Homework description..." required class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm">
+                    <select id="taskSubject" class="px-3 py-2.5 rounded-xl border border-slate-200 text-sm bg-white">
+                        <option value="General">General</option>
+                        <option value="Bangla">Bangla</option>
+                        <option value="English">English</option>
+                        <option value="Science">Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="ICT">ICT</option>
+                    </select>
+                    <button type="submit" class="bg-tealBrand-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm">Add Task</button>
+                </form>
+                <div id="taskList" class="space-y-2.5"></div>
+            </div>
+        </section>
+
+        <!-- TAB 4: API TUTORIAL -->
+        <section id="sec-tutorial" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h2 class="text-xl font-bold text-slate-800">Set Your Google Gemini API Key</h2>
+                <div class="bg-tealBrand-50 border border-tealBrand-200 p-5 rounded-xl space-y-3">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="password" id="inputApiKey" placeholder="Paste your AQ... or AIza... key here" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 text-sm font-mono">
+                        <button type="button" onclick="saveApiKeyFromInput()" class="bg-orangeBrand-500 text-white font-bold px-6 py-2.5 rounded-xl text-sm">Save Key</button>
+                    </div>
+                    <div id="keyFeedback" class="text-xs font-semibold"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: CONTACT -->
+        <section id="sec-contact" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto text-center space-y-4">
+                <h2 class="text-2xl font-bold text-slate-800">Developer Contact & Support</h2>
+                <p class="text-sm font-bold text-slate-800">Phone: +880 1885652766</p>
+                <p class="text-xs text-slate-600">Email: husamaldinahil888@gmail.com | husam04122014@hotmail.com</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        var savedApiKey = "";
+        const textbooks = [
+            { id: 1, title: "Charupath (চারুপাঠ)", category: "Bangla", color: "bg-teal-500", icon: "fa-book-open" },
+            { id: 2, title: "Anondapath (আনন্দপাঠ)", category: "Bangla", color: "bg-cyan-500", icon: "fa-feather" },
+            { id: 3, title: "English For Today", category: "English", color: "bg-blue-500", icon: "fa-language" },
+            { id: 4, title: "Mathematics (গণিত)", category: "Math", color: "bg-orange-500", icon: "fa-calculator" },
+            { id: 5, title: "Science (বিজ্ঞান)", category: "Science", color: "bg-purple-500", icon: "fa-flask" },
+            { id: 6, title: "ICT (তথ্য ও যোগাযোগ প্রযুক্তি)", category: "ICT", color: "bg-sky-500", icon: "fa-desktop" },
+            { id: 7, title: "Bangladesh & Global Studies", category: "BGS", color: "bg-green-600", icon: "fa-earth-americas" },
+            { id: 8, title: "Islam & Moral Education", category: "Religion", color: "bg-emerald-700", icon: "fa-mosque" }
+        ];
+
+        function initApp() { renderBooks(textbooks); updateApiKeyDisplay(); }
+        function switchTab(t) {
+            document.querySelectorAll('.tab-content').forEach(e => e.classList.add('hidden'));
+            document.getElementById('sec-' + t).classList.remove('hidden');
+        }
+        function renderBooks(list) {
+            document.getElementById('booksGrid').innerHTML = list.map(b => `
+                <div class="bg-white p-4 rounded-xl border border-slate-200 text-center">
+                    <h4 class="font-bold text-slate-800 text-xs mb-1">${b.title}</h4>
+                    <a href="https://nctb.gov.bd/pages/static-pages/695b987ac4774958d7b7040b" target="_blank" class="mt-2 block text-xs text-tealBrand-700 font-bold underline">Read Book</a>
+                </div>
+            `).join('');
+        }
+        function saveApiKeyFromInput() {
+            const val = document.getElementById('inputApiKey').value.trim();
+            if (val) { savedApiKey = val; updateApiKeyDisplay(); alert('Key Saved Successfully!'); }
+        }
+        function updateApiKeyDisplay() {
+            const status = document.getElementById('apiKeyStatus');
+            if (savedApiKey) { status.innerText = savedApiKey.substring(0, 6) + "..."; status.className = "font-mono text-tealBrand-700 font-bold"; }
+        }
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+            appendMessage('user', text);
+            input.value = '';
+            const botDiv = appendMessage('ai', 'Thinking...');
+            const key = savedApiKey || document.getElementById('inputApiKey').value.trim();
+            if (key) {
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: "Explain clearly for a Class 6 student: " + text }] }] })
+                    });
+                    const data = await res.json();
+                    if (data.candidates && data.candidates[0].content.parts[0].text) {
+                        botDiv.innerHTML = `<p>${data.candidates[0].content.parts[0].text.replace(/\n/g, '<br>')}</p>`;
+                        return;
+                    }
+                } catch (e) {}
+            }
+            botDiv.innerText = "🌱 Photosynthesis is how plants make food using sunlight! Check the textbooks tab above for full subject details.";
+        }
+        function appendMessage(sender, msg) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = "p-3 rounded-xl bg-white border border-slate-200 text-sm mb-2";
+            div.innerText = msg;
+            container.appendChild(div);
+            return div;
+        }
+        function addTask(e) {
+            e.preventDefault();
+            const title = document.getElementById('taskTitle').value.trim();
+            if (!title) return;
+            const div = document.createElement('div');
+            div.className = "p-3 bg-slate-50 border border-slate-200 rounded-xl flex justify-between text-sm";
+            div.innerHTML = `<span>${title}</span> <button onclick="this.parentElement.remove()" class="text-rose-500 font-bold">Delete</button>`;
+            document.getElementById('taskList').appendChild(div);
+            document.getElementById('taskTitle').value = '';
+        }
+        window.onload = initApp;
+    </script>
+</body>
+</html>
